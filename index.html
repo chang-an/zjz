@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>证件照换底色工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>证件照换底色工具</h1>
+        
+        <div class="upload-section">
+            <label for="imageInput" class="upload-btn">
+                <span>选择照片</span>
+                <input type="file" id="imageInput" accept="image/*" hidden>
+            </label>
+            <p class="upload-hint">支持 JPG、PNG 格式，建议尺寸 413x626 像素</p>
+        </div>
+
+        <div class="main-content" id="mainContent" style="display: none;">
+            <div class="image-container">
+                <div class="original-image">
+                    <h3>原始照片</h3>
+                    <canvas id="originalCanvas" width="400" height="500"></canvas>
+                </div>
+                
+                <div class="processed-image">
+                    <h3>处理后照片</h3>
+                    <canvas id="processedCanvas" width="400" height="500"></canvas>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="backgroundColor">背景颜色：</label>
+                    <input type="color" id="backgroundColor" value="#0066CC">
+                    <div class="color-preview" id="colorPreview"></div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="tolerance">容差：</label>
+                    <input type="range" id="tolerance" min="0" max="100" value="30">
+                    <span id="toleranceValue">30</span>
+                </div>
+                <div class="control-hint">容差越大，去除的背景越多。建议从30开始调整</div>
+                
+                <div class="control-group">
+                    <label for="faceProtection">人脸保护：</label>
+                    <input type="range" id="faceProtection" min="20" max="50" value="30">
+                    <span id="faceProtectionValue">30%</span>
+                </div>
+                <div class="control-hint">人脸保护区域大小，数值越大保护范围越大</div>
+                
+                <div class="control-group">
+                    <label for="debugMode">调试模式：</label>
+                    <input type="checkbox" id="debugMode">
+                    <span>显示详细检测信息</span>
+                </div>
+                
+                <div class="control-hint" style="background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                    <strong>🎯 新的使用方法（更准确！）</strong><br>
+                    1. 上传照片后，<strong>直接点击</strong>要替换的背景颜色区域<br>
+                    2. 算法会自动扩散到相似颜色的相邻像素<br>
+                    3. 红色区域表示检测到的背景<br>
+                    4. 调整容差参数控制扩散范围<br>
+                    5. 满意后点击"处理照片"进行替换
+                </div>
+                
+                <div class="control-group">
+                    <label for="blurRadius">模糊半径：</label>
+                    <input type="range" id="blurRadius" min="0" max="10" value="2">
+                    <span id="blurRadiusValue">2</span>
+                </div>
+                <div class="control-hint">模糊半径用于边缘平滑，数值越大边缘越平滑</div>
+                
+                <button id="processBtn" class="process-btn">处理照片</button>
+                <button id="testBtn" class="test-btn">测试背景检测</button>
+                <button id="quickTestBtn" class="quick-test-btn">快速测试</button>
+                <button id="downloadBtn" class="download-btn" style="display: none;">下载照片</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>使用说明：</h3>
+            <ol>
+                <li>点击"选择照片"按钮上传您的证件照</li>
+                <li>选择您想要的背景颜色</li>
+                <li>调整容差参数（数值越大，去除的背景越多）</li>
+                <li>调整模糊半径（用于边缘平滑）</li>
+                <li>点击"处理照片"按钮</li>
+                <li>处理完成后可以下载新照片</li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
